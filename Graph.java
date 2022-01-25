@@ -1,102 +1,91 @@
 package src;
 
-import java.util.*;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
-public class Graph {
+public class graph extends Application{
 
-	LinkedList<Vertex> vertices = new LinkedList<>();
+	Button generate = new Button("Generate");
 	
-	public Graph() {
-		
-		Scanner in  = new Scanner(System.in);
-		
-		String numVertices,edges;
-		
-		numVertices = in.nextLine();
-		
-		for(int i = 0; i < Integer.parseInt(numVertices); ++i ) {
-			addVertex();
-		}
-		
-		edges = in.nextLine();
-		while( !edges.equals("-1")) {
-			String[] nums = edges.split(",");
-			addEdge(Integer.parseInt(nums[0]), Integer.parseInt(nums[1]));
-			edges = in.nextLine();
-		}
-		in.close();
-		
-		colourVertices();
-		//System.out.println("**************");
-		/*for(int i = 0; i < vertices.size(); ++i) {
-			int vertex = getBiggestVertex();
-			if(vertex == -1) {
-				break;
-			}
-			vertices.get(vertex).setC(2);
-			System.out.println(vertex);
-		}
-		System.out.println("**************");*/
+	
+	public static void main(String[] args) {
 
-		displayDegree();
+			Application.launch(args);
+		
 	}
-	
-	private void colourVertices() {
+
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		primaryStage.setTitle("First FX");
+		Pane pane = new Pane();	
 		
-		while(true) {
-			int vertex1 = getBiggestVertex();
-			if(vertex1 == -1) {
-				break;
+		pane.setOnDragOver(dragOverEvent -> {
+			if(dragOverEvent.getGestureSource() != pane && dragOverEvent.getDragboard().hasString()) {
+				dragOverEvent.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+			}
+			
+			dragOverEvent.consume();
+		});
+		
+		pane.setOnDragDropped(droppedEvent -> {
+			
+			Dragboard droppedBoard = droppedEvent.getDragboard();
+			
+			if(droppedBoard.hasString()) {
+			//	System.out.println("event triggered -> "+droppedBoard.getString());
+				System.out.println("The mouse coordinates -> "+droppedEvent.getSceneX()+" , "+droppedEvent.getSceneY());
+				droppedEvent.setDropCompleted(true);
 			}else {
-				vertices.get(vertex1).setColor(vertices.size());
+				droppedEvent.setDropCompleted(false);
 			}
+			droppedEvent.consume();
+		});
 		
-		}
-		
-	}
-	
-	private void displayDegree() {
-		
-		for(Vertex v : vertices) {
-			System.out.println(v.getVertexNumber() +" : "+ v.getColour());
-		}
-	}
-	
-	public void addVertex() {
-		vertices.add(new Vertex(vertices.size()));
-	}
-	
-	public Vertex getVertex(int vertexIndex) {
-		return vertices.get(vertexIndex);
-	}
-	
-	public void addEdge(int vertex1,int vertex2) {
-		getVertex(vertex1).addAdjacency(getVertex(vertex2));
-		getVertex(vertex2).addAdjacency(getVertex(vertex1));
+		generate.setLayoutX(400);
+		generate.setLayoutY(400);
+		generate.setOnAction(actionEvent -> {
+			
+			Circle circle1 = new Shapes().createCircle(100, 100, 40);
+			
+			circle1.setOnDragDetected( dragEvent -> {
 
+	            Dragboard db = circle1.startDragAndDrop(TransferMode.ANY);
+
+	            ClipboardContent content = new ClipboardContent();
+	            content.putString("Circle source text");
+	            db.setContent(content);
+			});
+			
+			circle1.setOnMouseDragged(mouseDragged ->{
+				mouseDragged.setDragDetect(true);
+				
+			});
+			
+			pane.getChildren().add(circle1);
+		});
+		
+		
+		pane.getChildren().add(generate);
+		Scene myScene = new Scene(pane,900,500,true);
+		
+		primaryStage.setScene(myScene);
+		primaryStage.initStyle(StageStyle.DECORATED);
+		primaryStage.show();
 	}
 	
-	public int getBiggestVertex() {
-		
-		Vertex curr = vertices.get(0);
-		for(int i = 0; i < vertices.size(); ++i) {
-			
-			if(curr.getColour() != -1) {
-				if(i == vertices.size()-1) {
-					return -1;
-				}
-				curr = vertices.get(i+1);
-				continue;
-			}
-			
-			if(curr.getDegree() < vertices.get(i).getDegree() && vertices.get(i).getColour() == -1) {
-				curr = vertices.get(i);
-			}
-			
-		}
-		return curr.getVertexNumber();
-		
-		
-	}
+
+	
+	
 
 }

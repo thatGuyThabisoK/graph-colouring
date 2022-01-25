@@ -5,6 +5,7 @@ import java.util.LinkedList;
 public class Vertex {
 	
 	private int colour,vertexNumber;
+	int centerX,centerY;
 	LinkedList<Vertex> adjacentList = new LinkedList<>();
 	
 	public int getColour() { return colour;}
