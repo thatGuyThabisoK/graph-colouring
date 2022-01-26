@@ -4,27 +4,10 @@ import java.util.*;
 
 public class Colour {
 
-	LinkedList<Vertex> vertices = new LinkedList<>();
+	ArrayList<Vertex> vertices = new graph().vertices;
 	
 	public Colour() {
-		
-		Scanner in  = new Scanner(System.in);
-		
-		String numVertices,edges;
-		
-		numVertices = in.nextLine();
-		
-		for(int i = 0; i < Integer.parseInt(numVertices); ++i ) {
-			addVertex();
-		}
-		
-		edges = in.nextLine();
-		while( !edges.equals("-1")) {
-			String[] nums = edges.split(",");
-			addEdge(Integer.parseInt(nums[0]), Integer.parseInt(nums[1]));
-			edges = in.nextLine();
-		}
-		in.close();
+	
 		
 		colourVertices();
 		//System.out.println("**************");

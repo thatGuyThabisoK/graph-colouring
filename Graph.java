@@ -1,23 +1,22 @@
 package src;
 
+import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.input.ClipboardContent;
+import javafx.scene.control.TextField;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class graph extends Application{
 
 	Button generate = new Button("Generate");
-	
+	ArrayList<Vertex> vertices = new ArrayList<>();
+	TextField edgeField = new TextField();
+	Button enterEdge = new Button("Enter edge");
 	
 	public static void main(String[] args) {
 
@@ -42,9 +41,11 @@ public class graph extends Application{
 			
 			Dragboard droppedBoard = droppedEvent.getDragboard();
 			
-			if(droppedBoard.hasString()) {
-			//	System.out.println("event triggered -> "+droppedBoard.getString());
-				System.out.println("The mouse coordinates -> "+droppedEvent.getSceneX()+" , "+droppedEvent.getSceneY());
+			if(droppedBoard.hasString()) {				
+				
+				vertices.get(Integer.parseInt(droppedBoard.getString())).circleNode.setCenterX(droppedEvent.getSceneX());
+				vertices.get(Integer.parseInt(droppedBoard.getString())).circleNode.setCenterY(droppedEvent.getSceneY());
+				
 				droppedEvent.setDropCompleted(true);
 			}else {
 				droppedEvent.setDropCompleted(false);
@@ -52,31 +53,34 @@ public class graph extends Application{
 			droppedEvent.consume();
 		});
 		
-		generate.setLayoutX(400);
+		generate.setLayoutX(200);
 		generate.setLayoutY(400);
+		
+		enterEdge.setLayoutX(550);
+		enterEdge.setLayoutY(400);
+		
+		edgeField.setLayoutX(400);
+		edgeField.setLayoutY(400);
+		edgeField.setPromptText("Enter as such e.g 2,3 ");
+		
 		generate.setOnAction(actionEvent -> {
 			
-			Circle circle1 = new Shapes().createCircle(100, 100, 40);
-			
-			circle1.setOnDragDetected( dragEvent -> {
-
-	            Dragboard db = circle1.startDragAndDrop(TransferMode.ANY);
-
-	            ClipboardContent content = new ClipboardContent();
-	            content.putString("Circle source text");
-	            db.setContent(content);
-			});
-			
-			circle1.setOnMouseDragged(mouseDragged ->{
-				mouseDragged.setDragDetect(true);
-				
-			});
-			
-			pane.getChildren().add(circle1);
+			//Each time the generate button is pressed
+			//It should create a new vertex object contain a circle object that will be added to the scene
+			Vertex circleChild = new Vertex(vertices.size());
+			vertices.add(circleChild);
+			pane.getChildren().add(circleChild.circleNode);
 		});
 		
 		
+		enterEdge.setOnAction(actionEvent -> {
+			System.out.println(edgeField.getText());
+			edgeField.setText("");
+		});
+		
 		pane.getChildren().add(generate);
+		pane.getChildren().add(edgeField);
+		pane.getChildren().add(enterEdge);
 		Scene myScene = new Scene(pane,900,500,true);
 		
 		primaryStage.setScene(myScene);

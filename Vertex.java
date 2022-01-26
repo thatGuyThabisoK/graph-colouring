@@ -1,12 +1,15 @@
 package src;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+
+import javafx.scene.shape.Circle;
 
 public class Vertex {
 	
 	private int colour,vertexNumber;
-	int centerX,centerY;
-	LinkedList<Vertex> adjacentList = new LinkedList<>();
+	ArrayList<Vertex> adjacentList = new ArrayList<>();
+	Shapes myShapeObj = new Shapes();
+	Circle circleNode;
 	
 	public int getColour() { return colour;}
 	public void setC(int colour) {this.colour = colour;}
@@ -17,6 +20,9 @@ public class Vertex {
 		
 		this.vertexNumber = vertexNumber;
 		colour = -1;
+		circleNode = myShapeObj.createCircle(100,100,25);
+		myShapeObj.setOnDrag(circleNode,vertexNumber);
+		
 	}
 	
 	
