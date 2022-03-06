@@ -1,20 +1,20 @@
 package src;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 
 public class Vertex {
 	
 	private int colour,vertexNumber;
 	ArrayList<Vertex> adjacentList = new ArrayList<>();
-	Shapes myShapeObj = new Shapes();
-	Circle circleNode;
-	
-	public int getColour() { return colour;}
-	public void setC(int colour) {this.colour = colour;}
-	
-	public int getVertexNumber() { return vertexNumber;}
+	private Shapes myShapeObj = new Shapes();
+	private Circle circleNode;
+	private HashMap<String, Line> links = new HashMap<>();	
 	
 	public Vertex(int vertexNumber) {
 		
@@ -24,6 +24,22 @@ public class Vertex {
 		myShapeObj.setOnDrag(circleNode,vertexNumber);
 		
 	}
+	
+	public void updateLink(double d, double e) {
+		for(Map.Entry<String, Line> entry : links.entrySet()) {
+			
+			// for each line in the vertex we make sure that we update the correct points
+			//by first checking 
+			
+			if(entry.getKey().contains("start")) {
+				entry.getValue().setStartX(d);
+				entry.getValue().setStartY(e);
+			}else {
+				entry.getValue().setEndX(d);
+				entry.getValue().setEndY(e);
+			}
+		}
+	}//
 	
 	
 	public void addAdjacency(Vertex v) {
@@ -67,11 +83,34 @@ public class Vertex {
 			}
 		}
 		
-		
 		colour = index;
-		
 		
 	}
 	
+	public void addLink(String startOrEnd,Line line) { 
+	
+		if(!links.containsKey(startOrEnd)) {
+			
+			links.put(startOrEnd,line);
+			
+		}else {
+				
+			addLink(startOrEnd.concat(Integer.toString(new Random().nextInt())), line);
+		
+		}
+		
+	}
+	
+	
+	public int getColour() { return colour;}
+	public void setC(int colour) {this.colour = colour;}
+	
+	public int getVertexNumber() { return vertexNumber;}
+	
+	public double getCenterX() { return circleNode.getCenterX();}
+	
+	public double getCenterY() { return circleNode.getCenterY();}
+	
+	public Circle myCircleNode() {return circleNode;}
 
 }

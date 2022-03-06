@@ -15,8 +15,12 @@ public class Shapes {
 		circle.setRadius(radius);
 		circle.setStroke(Color.valueOf("#000000"));
 		circle.setStrokeWidth(2);
-		circle.setFill(Color.TRANSPARENT);
+		circle.setFill(Color.WHITE);
 		return circle;
+	}
+	
+	public Line createEdge(int startX,int startY, int endX, int endY) {
+		 return new Line(startX,startY,endX,endY);
 	}
 	
 	public void setOnDrag(Circle circle1,int vertexNumber) {
