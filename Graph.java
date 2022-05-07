@@ -24,6 +24,7 @@ public class graph extends Application{
 	TextField edgeField = new TextField();
 	Button enterEdge = new Button("Enter edge");
 	Button removeNode = new Button("Remove node");
+	Button colourVertices  = new Button("Colour");
 	boolean showAlert = true;
 	public static void main(String[] args) {
 
@@ -57,6 +58,8 @@ public class graph extends Application{
 				getVertex(nodeAt).myCircleNode().setCenterX(droppedEvent.getSceneX());
 				getVertex(nodeAt).myCircleNode().setCenterY(droppedEvent.getSceneY());
 				
+				
+				//
 				getVertex(nodeAt).updateLink(droppedEvent.getSceneX(), droppedEvent.getSceneY());
 				
 				
@@ -70,12 +73,11 @@ public class graph extends Application{
 			droppedEvent.consume();
 		});
 		
-		
 		setDimentions(generate,200,400);
 		setDimentions(removeNode,280,400);
-		setDimentions(enterEdge,550, 400);
 		setDimentions(edgeField,400, 400);
-		
+		setDimentions(enterEdge,550, 400);
+		setDimentions(colourVertices,650,400);
 		
 		
 		edgeField.setPromptText("Enter as such e.g 2,3 ");
@@ -92,11 +94,11 @@ public class graph extends Application{
 		
 		
 		enterEdge.setOnAction(actionEvent -> {
-			System.out.println(pane.getC);
+			//oSystem.out.println();
 			String edges = edgeField.getText();
-			if(!edges.isEmpty() || !edges.isBlank()) {
+			if(!edges.isEmpty() && edges.split(",").length == 2) {
 					String nodes[] = edges.split(",");
-					
+					System.out.println(edges);
 					int nodeAt1 = Integer.parseInt(nodes[0]);
 					int nodeAt2 = Integer.parseInt(nodes[1]);
 					
@@ -113,7 +115,10 @@ public class graph extends Application{
 					
 					getVertex(nodeAt1).addLink("start".concat(Integer.toString(new Random().nextInt())),edgeLine);
 					getVertex(nodeAt2).addLink("end".concat(Integer.toString(nodeAt2)),edgeLine);
-					//
+				
+					
+					//TODO if a link has been added between nodes then another link should not be added on top of the existing one
+				
 					pane.getChildren().add(edgeLine);
 
 					
@@ -149,17 +154,35 @@ public class graph extends Application{
 		
 		
 		
+		colourVertices.setMnemonicParsing(true);
+		colourVertices.setText("_Colour");
+		
+		colourVertices.setOnAction(colourAction->{
+		
+			int length = vertices.size();
+			
+			(length == 0)? showWarning("No vertices to colour") : new Colour(vertices);
+			
+			
+			
+			
+		});
+		
+		
+		
 		pane.getChildren().add(generate);
 		pane.getChildren().add(edgeField);
 		pane.getChildren().add(enterEdge);
 		pane.getChildren().add(removeNode);
+		pane.getChildren().add(colourVertices);
+		
+		
 		Scene myScene = new Scene(pane,900,500,true);
 		
 		primaryStage.setScene(myScene);
 		primaryStage.initStyle(StageStyle.DECORATED);
 		primaryStage.show();
 	}
-	
 	
 	
 	public void addEdge(int vertex1,int vertex2) {
@@ -169,15 +192,33 @@ public class graph extends Application{
 	}
 	
 
-	public void setDimentions(Object btn,int centerX, int centerY) {
+	public <T extends Node> void setDimentions(T btn,int centerX, int centerY) {
 	
-			((Node) btn).setLayoutX(centerX);
-			((Node) btn).setLayoutY(centerY);
+			 btn.setLayoutX(centerX);
+			 btn.setLayoutY(centerY);
 		
 	}
 	
 	public Vertex getVertex(int vertexIndex) {
 		return vertices.get(vertexIndex);
 	}
+	
+	private void fillColour() {
+		
+		for(Vertex i : vertices) {
+			
+		}
+		
+	}
+	
+	private void showWarning(String warning) {
+		
+		Alert myWarning = new Alert(AlertType.WARNING);
+		myWarning.setContentText(warning);
+		myWarning.show();
+		
+	}
+	
+	
 
 }

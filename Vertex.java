@@ -89,6 +89,11 @@ public class Vertex {
 	
 	public void addLink(String startOrEnd,Line line) { 
 	
+		//this function adds the line that links this vertex to other vertices to its links hash map 
+		//the point of the startOrEnd string is for us to be able to update the position
+		// of the correct end of the line for instance if the is a node  at the end of a line, then when we
+		//move said node we know that we'll have to update the end of the line and we will keep the starting position the same
+		
 		if(!links.containsKey(startOrEnd)) {
 			
 			links.put(startOrEnd,line);
@@ -99,6 +104,13 @@ public class Vertex {
 		
 		}
 		
+	}
+	
+	private boolean isNeighbour(int node) {
+		
+		//TODO this method will check if there node that is parsed adjacent to the present node 
+		
+		return true;
 	}
 	
 	
