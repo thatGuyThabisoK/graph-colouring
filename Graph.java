@@ -102,27 +102,32 @@ public class graph extends Application{
 					int nodeAt1 = Integer.parseInt(nodes[0]);
 					int nodeAt2 = Integer.parseInt(nodes[1]);
 					
-					addEdge(nodeAt1,nodeAt2);
 					
-					
-					Line edgeLine = new Line();
-					
-					edgeLine.setStartX(getVertex(nodeAt1).getCenterX());
-					edgeLine.setStartY(getVertex(nodeAt1).getCenterY());
-					
-					edgeLine.setEndX(getVertex(nodeAt2).getCenterX());
-					edgeLine.setEndY(getVertex(nodeAt2).getCenterY());
-					
-					getVertex(nodeAt1).addLink("start".concat(Integer.toString(new Random().nextInt())),edgeLine);
-					getVertex(nodeAt2).addLink("end".concat(Integer.toString(nodeAt2)),edgeLine);
+					if(!getVertex(nodeAt1).isAdjancent(getVertex(nodeAt2))) {
+						addEdge(nodeAt1,nodeAt2);
+						
+						
+						Line edgeLine = new Line();
+						
+						edgeLine.setStartX(getVertex(nodeAt1).getCenterX());
+						edgeLine.setStartY(getVertex(nodeAt1).getCenterY());
+						
+						edgeLine.setEndX(getVertex(nodeAt2).getCenterX());
+						edgeLine.setEndY(getVertex(nodeAt2).getCenterY());
+						
+						
+						if(getVertex(nodeAt1).addLink(edges,edgeLine) && getVertex(nodeAt2).addLink(edges,edgeLine))
+							pane.getChildren().add(edgeLine);
+						
+						
+						edgeField.setText("");
+						
+					}else {
+						System.err.println("ERROR this vertices are already neibours");
+					}
+									
 				
 					
-					//TODO if a link has been added between nodes then another link should not be added on top of the existing one
-				
-					pane.getChildren().add(edgeLine);
-
-					
-					edgeField.setText("");
 			}else {
 				
 				Alert error = new Alert(AlertType.ERROR);
@@ -139,10 +144,8 @@ public class graph extends Application{
 		
 		removeNode.setOnAction(remove->{
 			if(showAlert) {
-				Alert warning = new Alert(AlertType.WARNING);
-				warning.setContentText("The last vertex to be added will be removed along with any edges associated with it");
-				warning.show();
 				
+				showWarning("The last vertex to be added will be removed along with any edges associated with it");
 				showAlert = false;
 			}
 			
@@ -161,7 +164,9 @@ public class graph extends Application{
 		
 			int length = vertices.size();
 			
-			(length == 0)? showWarning("No vertices to colour") : new Colour(vertices);
+			if(length == 0) { showWarning("No vertices to colour");}
+			else
+				new Colour(vertices);
 			
 			
 			
@@ -200,7 +205,19 @@ public class graph extends Application{
 	}
 	
 	public Vertex getVertex(int vertexIndex) {
-		return vertices.get(vertexIndex);
+		
+		try {
+			
+			return vertices.get(vertexIndex);
+			
+		}catch(IndexOutOfBoundsException e) {
+			
+			showError("One of the vertices you have entered has does not exist!");
+			
+			return null;
+		}
+		
+		
 	}
 	
 	private void fillColour() {
@@ -210,6 +227,14 @@ public class graph extends Application{
 		}
 		
 	}
+	
+	
+	private void showError(String message) {
+		Alert myWarning = new Alert(AlertType.ERROR);
+		myWarning.setContentText(message);
+		myWarning.show();
+	}
+	
 	
 	private void showWarning(String warning) {
 		
