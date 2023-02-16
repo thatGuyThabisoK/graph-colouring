@@ -1,6 +1,7 @@
 package src;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Random;
 
 import javafx.application.Application;
@@ -153,11 +154,11 @@ public class graph extends Application{
 				if(pane.contains(vertices.get(i).getCenterX(), vertices.get(i).getCenterY()) ) {
 					pane.getChildren().remove(vertices.get(i).myCircleNode());
 					
-					if(vertices.get(i).getDegree() > 0) {
+					for(Map.Entry<String, Line> entry : vertices.get(i).getLinks().entrySet()) {
 						
 						
+						pane.getChildren().remove(entry.getValue());
 						
-						//TODO reomove the links of the vertices here
 						
 					}
 					
@@ -167,7 +168,7 @@ public class graph extends Application{
 			}
 			
 			vertices.clear();
-			// TODO 
+			
 			
 			
 		});

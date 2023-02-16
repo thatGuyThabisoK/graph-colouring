@@ -21,7 +21,7 @@ public class Vertex{
 	ArrayList<Vertex> adjacentList = new ArrayList<>();
 	private Shapes myShapeObj = new Shapes();
 	private Circle circleNode;
-	private HashMap<String, Line> links = new HashMap<>();	
+	HashMap<String, Line> links = new HashMap<>();	
 	
 	public Vertex(int vertexNumber) {
 		
@@ -140,6 +140,7 @@ public class Vertex{
 	private void setMyColour(int colour) {this.colour = colour;}
 	
 	public int getVertexNumber() { return vertexNumber;}
+	public HashMap<String,Line> getLinks(){ return links;}
 	
 	public double getCenterX() { return circleNode.getCenterX();}
 	
