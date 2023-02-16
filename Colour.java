@@ -20,10 +20,10 @@ public class Colour {
 			}
 			vertices.get(vertex).setC(2);
 			System.out.println(vertex);
-		}
-		System.out.println("**************");*/
+		}*/
+		System.out.println("**************");
 
-	//	displayDegree(vertices);
+		displayDegree(vertices);
 	}
 	
 	private void colourVertices(ArrayList<Vertex> vertices) {
@@ -44,8 +44,15 @@ public class Colour {
 	
 	private void displayDegree(ArrayList<Vertex> vertices) {
 		
-		for(Vertex v : vertices) {
-			System.out.println(v.getVertexNumber() +" : "+ v.getColour());
+		for(int i = 0; i < vertices.size(); ++i) {
+			int dis = vertices.get(i).getColour();
+			
+			
+			if(dis != -1) {
+				vertices.get(i).changeColour(dis);
+			}else {
+				System.err.println("Vertex -> "+i+" is not colored in........");
+			}
 		}
 	}
 	

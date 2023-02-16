@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -23,7 +24,7 @@ public class graph extends Application{
 	ArrayList<Vertex> vertices = new ArrayList<>();
 	TextField edgeField = new TextField();
 	Button enterEdge = new Button("Enter edge");
-	Button removeNode = new Button("Remove node");
+	Button removeNode = new Button("Clear node");
 	Button colourVertices  = new Button("Colour");
 	boolean showAlert = true;
 	public static void main(String[] args) {
@@ -62,7 +63,7 @@ public class graph extends Application{
 				//
 				getVertex(nodeAt).updateLink(droppedEvent.getSceneX(), droppedEvent.getSceneY());
 				
-				
+				//getVertex(nodeAt).myShape().getDirection(getVertex(nodeAt).myCircleNode().);
 				
 				
 				
@@ -104,11 +105,13 @@ public class graph extends Application{
 					
 					
 					if(!getVertex(nodeAt1).isAdjancent(getVertex(nodeAt2))) {
+						
 						addEdge(nodeAt1,nodeAt2);
 						
 						
-						Line edgeLine = new Line();
 						
+						Line edgeLine = new Line();
+					//	edgeLine.
 						edgeLine.setStartX(getVertex(nodeAt1).getCenterX());
 						edgeLine.setStartY(getVertex(nodeAt1).getCenterY());
 						
@@ -118,6 +121,7 @@ public class graph extends Application{
 						
 						if(getVertex(nodeAt1).addLink(edges,edgeLine) && getVertex(nodeAt2).addLink(edges,edgeLine))
 							pane.getChildren().add(edgeLine);
+							
 						
 						
 						edgeField.setText("");
@@ -130,10 +134,7 @@ public class graph extends Application{
 					
 			}else {
 				
-				Alert error = new Alert(AlertType.ERROR);
-				error.setContentText("Please check that you have entered, if at all, the edges in the correct format e.g 4,5");
-				error.show();
-				
+				showError("Please check that you have entered, if at all, the edges in the correct format e.g 4,5");
 				
 			}
 			
@@ -143,14 +144,30 @@ public class graph extends Application{
 		});
 		
 		removeNode.setOnAction(remove->{
-			if(showAlert) {
+	
 				
-				showWarning("The last vertex to be added will be removed along with any edges associated with it");
-				showAlert = false;
+			///showWarning("The last vertex to be added will be removed along with any edges associated with it");
+			
+			for(int i = 0; i < vertices.size(); ++i) {
+				
+				if(pane.contains(vertices.get(i).getCenterX(), vertices.get(i).getCenterY()) ) {
+					pane.getChildren().remove(vertices.get(i).myCircleNode());
+					
+					if(vertices.get(i).getDegree() > 0) {
+						
+						
+						
+						//TODO reomove the links of the vertices here
+						
+					}
+					
+					
+				}
+				
 			}
 			
-			
-			// TODO add the code to remove last vertex and all its associated edges here
+			vertices.clear();
+			// TODO 
 			
 			
 		});

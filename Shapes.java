@@ -40,5 +40,53 @@ public class Shapes {
 		});
 		
 	}
+	
+	public void getDirection(Line line) {
+		
+		double diffX = line.getStartX() - line.getEndX();
+		double diffY = line.getStartY() - line.getEndY();
+	
+		quad(diffY,diffX);	
+		
+	}
+	
+	
+	
+	
+	public int setLineLength(int center,int radius) {
+		
+		
+		
+		
+		return 0;
+	}
+	
+	private void quad(double diffY, double diffX) {
+		
+		if(diffY > 0) {
+			
+			System.out.print("lower part ");
+			x_Sector(diffX);
+			
+		}else if(diffY < 0) {
+			System.out.print("upper part ");
+			x_Sector(diffX);
+		}
+		
+	}
+	
+	private void x_Sector(double diffX) {
+		
+		if(diffX < 0) {
+			System.out.println("right sector");				
+		}else if(diffX > 0 ) {
+			System.out.println("left sector");	
+		}else {
+			
+			System.out.println("lie on the same point");
+		}
+		
+	}
+	
 
 }

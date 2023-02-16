@@ -8,10 +8,14 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 
 public class Vertex{
+	
+	ArrayList<Color> myColors = new ArrayList<>();
+	
 	
 	private int colour,vertexNumber;
 	ArrayList<Vertex> adjacentList = new ArrayList<>();
@@ -25,6 +29,12 @@ public class Vertex{
 		colour = -1;
 		circleNode = myShapeObj.createCircle(100,100,25);
 		myShapeObj.setOnDrag(circleNode,vertexNumber);
+		
+		myColors.add(Color.BEIGE);
+		myColors.add(Color.CRIMSON);
+		myColors.add(Color.PINK);
+		myColors.add(Color.BLACK);
+		
 		
 	}
 	
@@ -74,21 +84,28 @@ public class Vertex{
 		
 		int[] used = new int[degree];
 		int index = 0;
+		
+	
+			
 		for(Vertex curr : adjacentList) {
 			if(curr.getColour() != -1) {
 				used[curr.getColour()] = 1;
 			}
-			
+				
 		}
-		
+			
 		for(int i = 0; i < degree; ++i) {
 			if(used[i] == 0) {
 				index = i;
 				break;
 			}
 		}
+			
+		setMyColour(index);
+			
+			
 		
-		colour = index;
+		
 		
 	}
 	
@@ -120,7 +137,7 @@ public class Vertex{
 	
 	
 	public int getColour() { return colour;}
-	public void setC(int colour) {this.colour = colour;}
+	private void setMyColour(int colour) {this.colour = colour;}
 	
 	public int getVertexNumber() { return vertexNumber;}
 	
@@ -129,6 +146,13 @@ public class Vertex{
 	public double getCenterY() { return circleNode.getCenterY();}
 	
 	public Circle myCircleNode() {return circleNode;}
+	public Shapes myShape() { return myShapeObj;}
+
+	public void changeColour(int dis) {
+		
+		circleNode.setFill(myColors.get(dis));
+		
+	}
 
 	
 }
