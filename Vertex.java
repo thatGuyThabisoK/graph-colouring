@@ -101,7 +101,7 @@ public class Vertex{
 			}
 		}
 			
-		setMyColour(index);
+	 colour = index;
 			
 			
 		
@@ -137,7 +137,7 @@ public class Vertex{
 	
 	
 	public int getColour() { return colour;}
-	private void setMyColour(int colour) {this.colour = colour;}
+	
 	
 	public int getVertexNumber() { return vertexNumber;}
 	public HashMap<String,Line> getLinks(){ return links;}

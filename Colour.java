@@ -8,7 +8,7 @@ public class Colour {
 	
 		
 		colourVertices(vertices);
-		
+		//checkUp(vertices);
 		//
 		
 		
@@ -31,9 +31,11 @@ public class Colour {
 		while(true) {
 			int vertex1 = getBiggestVertex(vertices);
 			if(vertex1 == -1) {
+				System.out.println("Breaking colour assignment");
 				break;
 			}else {
 				vertices.get(vertex1).setColor(vertices.size());
+				System.out.println(vertex1+" colour-> "+vertices.get(vertex1).getColour());
 			}
 		
 		}
@@ -49,7 +51,9 @@ public class Colour {
 			
 			
 			if(dis != -1) {
+				System.out.println(i+" : "+dis);
 				vertices.get(i).changeColour(dis);
+				
 			}else {
 				System.err.println("Vertex -> "+i+" is not colored in........");
 			}
@@ -92,5 +96,22 @@ public class Colour {
 		
 		
 	}
+	
+	
+	public void checkUp(ArrayList<Vertex> vertices) {
+		
+		System.out.println("********Updated node degrees******");
+		
+		for(Vertex v : vertices) {
+			
+			System.out.println(v.getVertexNumber()+" :"+v.getDegree());
+			
+		}
+		
+		
+	}
+	
+	
+	
 
 }

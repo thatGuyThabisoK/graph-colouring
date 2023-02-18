@@ -2,8 +2,6 @@ package src;
 
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.Random;
-
 import javafx.application.Application;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -14,7 +12,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -238,14 +235,6 @@ public class graph extends Application{
 		
 	}
 	
-	private void fillColour() {
-		
-		for(Vertex i : vertices) {
-			
-		}
-		
-	}
-	
 	
 	private void showError(String message) {
 		Alert myWarning = new Alert(AlertType.ERROR);
@@ -261,6 +250,10 @@ public class graph extends Application{
 		myWarning.show();
 		
 	}
+	
+	
+	
+	
 	
 	
 
