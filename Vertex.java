@@ -1,23 +1,23 @@
 package src;
 
-import java.util.AbstractCollection;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
+
 import java.util.Map;
-import java.util.Random;
+
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 
-public class Vertex{
+public class Vertex implements Comparator<Vertex>{
 	
 	ArrayList<Color> myColors = new ArrayList<>();
 	
 	
-	private int colour,vertexNumber;
+	private int colour,vertexNumber = -1111;
 	ArrayList<Vertex> adjacentList = new ArrayList<>();
 	private Shapes myShapeObj = new Shapes();
 	private Circle circleNode;
@@ -68,12 +68,16 @@ public class Vertex{
 	
 	
 	
-	public boolean isAdjancent(Vertex v) {
+	public boolean isAdjancent(Vertex v){
 		
 		for(Vertex e : adjacentList) {
+			
 			if(e.vertexNumber == v.vertexNumber) {
+				
 				return true;
+				
 			}
+			
 		}
 		
 		return false;
@@ -127,14 +131,6 @@ public class Vertex{
 		
 	}
 	
-	private boolean isNeighbour(int node) {
-		
-		//TODO this method will check if the node that is parsed is adjacent to the present node 
-		//adjacentList.
-		
-		return true;
-	}
-	
 	
 	public int getColour() { return colour;}
 	
@@ -154,6 +150,15 @@ public class Vertex{
 		circleNode.setFill(myColors.get(dis));
 		
 	}
+
+
+	@Override
+	public int compare(Vertex v1, Vertex v2) {
+		
+		return (v1.getDegree() > v2.getDegree())? 1 : 0;
+	}
+	
+
 
 	
 }

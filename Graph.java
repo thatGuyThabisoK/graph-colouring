@@ -22,7 +22,7 @@ public class graph extends Application{
 	ArrayList<Vertex> vertices = new ArrayList<>();
 	TextField edgeField = new TextField();
 	Button enterEdge = new Button("Enter edge");
-	Button removeNode = new Button("Clear node");
+	Button removeNode = new Button("Remove nodes");
 	Button colourVertices  = new Button("Colour");
 	boolean showAlert = true;
 	public static void main(String[] args) {
@@ -177,13 +177,15 @@ public class graph extends Application{
 		
 		colourVertices.setOnAction(colourAction->{
 		
-			int length = vertices.size();
 			
-			if(length == 0) { showWarning("No vertices to colour");}
+			if(vertices.size() == 0) { showWarning("No vertices to colour");}
 			else
 				new Colour(vertices);
 			
 			
+			if(vertices.get(0).compare(vertices.get(0),vertices.get(1)) == 1) {
+				System.err.println("vertex 0 has a larger degree");
+			}
 			
 			
 		});
