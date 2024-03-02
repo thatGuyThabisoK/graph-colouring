@@ -7,21 +7,10 @@ public class Colour {
 	ArrayList<Vertex> vertices = new graph().vertices;
 	
 	public Colour() {
-	
 		
 		colourVertices();
-		//System.out.println("**************");
-		/*for(int i = 0; i < vertices.size(); ++i) {
-			int vertex = getBiggestVertex();
-			if(vertex == -1) {
-				break;
-			}
-			vertices.get(vertex).setC(2);
-			System.out.println(vertex);
-		}
-		System.out.println("**************");*/
-
 		displayDegree();
+		
 	}
 	
 	private void colourVertices() {
