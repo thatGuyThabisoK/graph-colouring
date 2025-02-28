@@ -33,7 +33,7 @@ public class graph extends Application{
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		primaryStage.setTitle("First FX");
+		primaryStage.setTitle("Graph Visualizer");
 		
 		Pane pane = new Pane();	
 		
@@ -101,8 +101,9 @@ public class graph extends Application{
 					int nodeAt1 = Integer.parseInt(nodes[0]);
 					int nodeAt2 = Integer.parseInt(nodes[1]);
 					
+					Vertex node1 = getVertex(nodeAt1), node2 = getVertex(nodeAt2);
 					
-					if(!getVertex(nodeAt1).isAdjancent(getVertex(nodeAt2))) {
+					if(!node1.isAdjancent(node2)) {
 						
 						addEdge(nodeAt1,nodeAt2);
 						
@@ -110,14 +111,14 @@ public class graph extends Application{
 						
 						Line edgeLine = new Line();
 					//	edgeLine.
-						edgeLine.setStartX(getVertex(nodeAt1).getCenterX());
-						edgeLine.setStartY(getVertex(nodeAt1).getCenterY());
+						edgeLine.setStartX(node1.getCenterX());
+						edgeLine.setStartY(node1.getCenterY());
 						
-						edgeLine.setEndX(getVertex(nodeAt2).getCenterX());
-						edgeLine.setEndY(getVertex(nodeAt2).getCenterY());
+						edgeLine.setEndX(node2.getCenterX());
+						edgeLine.setEndY(node2.getCenterY());
 						
 						
-						if(getVertex(nodeAt1).addLink(edges,edgeLine) && getVertex(nodeAt2).addLink(edges,edgeLine))
+						if(node1.addLink(edges,edgeLine) && node2.addLink(edges,edgeLine))
 							pane.getChildren().add(edgeLine);
 							
 						
@@ -203,6 +204,10 @@ public class graph extends Application{
 		
 		primaryStage.setScene(myScene);
 		primaryStage.initStyle(StageStyle.DECORATED);
+		primaryStage.setMaxHeight(500);
+		primaryStage.setMinHeight(500);
+		primaryStage.setMaxWidth(900);
+		primaryStage.setMinWidth(900);
 		primaryStage.show();
 	}
 	
@@ -250,6 +255,12 @@ public class graph extends Application{
 		Alert myWarning = new Alert(AlertType.WARNING);
 		myWarning.setContentText(warning);
 		myWarning.show();
+		
+	}
+	
+	public void transformLineCoordinates(double radius,Vertex node1, Vertex node2) {
+		
+		
 		
 	}
 	

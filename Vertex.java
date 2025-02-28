@@ -105,7 +105,7 @@ public class Vertex implements Comparator<Vertex>{
 			}
 		}
 			
-	 colour = index;
+		colour = index;
 			
 			
 		
@@ -117,7 +117,7 @@ public class Vertex implements Comparator<Vertex>{
 	
 		//this function adds the line that links this vertex to other vertices to its links hash map 
 		//the point of the edges string is for us to be able to update the position
-		// of the correct end of the line for instance if the is a node  at the end of a line, then when we
+		// of the correct end of the line for instance if there is a node  at the end of a line, then when we
 		//move said node we know that we'll have to update the end of the line and we will keep the starting position the same
 		
 		if(!links.containsKey(edges)) {
@@ -143,6 +143,7 @@ public class Vertex implements Comparator<Vertex>{
 	public double getCenterY() { return circleNode.getCenterY();}
 	
 	public Circle myCircleNode() {return circleNode;}
+	public double radius() { return myCircleNode().getRadius();}
 	public Shapes myShape() { return myShapeObj;}
 
 	public void changeColour(int dis) {
