@@ -15,12 +15,11 @@ import javafx.scene.shape.Line;
 public class Vertex implements Comparator<Vertex>{
 	
 	ArrayList<Color> myColors = new ArrayList<>();
-	
-	
 	private int colour,vertexNumber = -1111;
 	ArrayList<Vertex> adjacentList = new ArrayList<>();
 	private Shapes myShapeObj = new Shapes();
 	private Circle circleNode;
+	
 	HashMap<String, Line> links = new HashMap<>();	
 	
 	public Vertex(int vertexNumber) {
@@ -38,20 +37,28 @@ public class Vertex implements Comparator<Vertex>{
 		
 	}
 	
-	public void updateLink(double d, double e) {
+	public Vertex(double x, double y) {
+		circleNode = myShapeObj.createCircle(x,y,25);
+	}
+	
+	public void updateLink(Vertex node) {
 		for(Map.Entry<String, Line> entry : links.entrySet()) {
 			
 			// for each line in the vertex we make sure that we update the correct points
 			//each key in the map is an edge of the form "3,2" ,each vertex will have a key of this form
 			// e.g vertex 3 will have an edge 3,2 in its links hash map and so will vertex 2
 			String[] startOrEnd = entry.getKey().split(",");
+			Line currLine = entry.getValue();
 			
-			if(startOrEnd[0].equals(String.valueOf(this.vertexNumber))) {
-				entry.getValue().setStartX(d);
-				entry.getValue().setStartY(e);
+			
+			if(startOrEnd[0].equals(String.valueOf(vertexNumber))) {
+				
+				currLine.setStartX(node.getCenterX());
+				currLine.setStartY(node.getCenterY());
 			}else {
-				entry.getValue().setEndX(d);
-				entry.getValue().setEndY(e);
+			
+				currLine.setEndX(node.getCenterX());
+				currLine.setEndY(node.getCenterY());
 			}
 		}
 	}//
@@ -106,6 +113,7 @@ public class Vertex implements Comparator<Vertex>{
 		}
 			
 		colour = index;
+
 			
 			
 		
@@ -131,9 +139,9 @@ public class Vertex implements Comparator<Vertex>{
 		
 	}
 	
-	
 	public int getColour() { return colour;}
 	
+	public boolean hasNeighbour() {return (adjacentList.size() > 0);}
 	
 	public int getVertexNumber() { return vertexNumber;}
 	public HashMap<String,Line> getLinks(){ return links;}
@@ -143,6 +151,7 @@ public class Vertex implements Comparator<Vertex>{
 	public double getCenterY() { return circleNode.getCenterY();}
 	
 	public Circle myCircleNode() {return circleNode;}
+
 	public double radius() { return myCircleNode().getRadius();}
 	public Shapes myShape() { return myShapeObj;}
 
@@ -157,6 +166,11 @@ public class Vertex implements Comparator<Vertex>{
 	public int compare(Vertex v1, Vertex v2) {
 		
 		return (v1.getDegree() > v2.getDegree())? 1 : 0;
+	}
+
+	public Vertex getNeighbour() {
+		
+		return adjacentList.get(0);
 	}
 	
 

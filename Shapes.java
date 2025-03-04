@@ -8,7 +8,7 @@ import javafx.scene.shape.*;
 
 public class Shapes {
 	
-	public Circle createCircle(int centerX,int centerY, int radius) {
+	public Circle createCircle(double centerX,double centerY, int radius) {
 		Circle circle = new Circle();
 		circle.setCenterX(centerX);
 		circle.setCenterY(centerY);

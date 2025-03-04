@@ -8,22 +8,10 @@ public class Colour {
 	
 		
 		colourVertices(vertices);
-		//checkUp(vertices);
-		//
-		
-		
 		//System.out.println("**************");
-		/*for(int i = 0; i < vertices.size(); ++i) {
-			int vertex = getBiggestVertex();
-			if(vertex == -1) {
-				break;
-			}
-			vertices.get(vertex).setC(2);
-			System.out.println(vertex);
-		}*/
-		System.out.println("**************");
 
-		displayDegree(vertices);
+		//displayDegree(vertices);
+
 	}
 	
 	private void colourVertices(ArrayList<Vertex> vertices) {
@@ -31,11 +19,11 @@ public class Colour {
 		while(true) {
 			int vertex1 = getBiggestVertex(vertices);
 			if(vertex1 == -1) {
-				System.out.println("Breaking colour assignment");
+				//System.out.println("Breaking colour assignment");
 				break;
 			}else {
 				vertices.get(vertex1).setColor(vertices.size());
-				System.out.println(vertex1+" colour-> "+vertices.get(vertex1).getColour());
+				//System.out.println(vertex1+" colour-> "+vertices.get(vertex1).getColour());
 			}
 		
 		}

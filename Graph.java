@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class graph extends Application{
-
+	
 	Button generate = new Button("Generate");
 	ArrayList<Vertex> vertices = new ArrayList<>();
 	TextField edgeField = new TextField();
@@ -58,11 +58,11 @@ public class graph extends Application{
 				getVertex(nodeAt).myCircleNode().setCenterY(droppedEvent.getSceneY());
 				
 				
-				//
-				getVertex(nodeAt).updateLink(droppedEvent.getSceneX(), droppedEvent.getSceneY());
 				
-				//getVertex(nodeAt).myShape().getDirection(getVertex(nodeAt).myCircleNode().);
-				
+				if(getVertex(nodeAt).hasNeighbour()) {
+					
+					getVertex(nodeAt).updateLink(getVertex(nodeAt));
+				}
 				
 				
 				droppedEvent.setDropCompleted(true);
@@ -93,11 +93,11 @@ public class graph extends Application{
 		
 		
 		enterEdge.setOnAction(actionEvent -> {
-			//oSystem.out.println();
+			
 			String edges = edgeField.getText();
 			if(!edges.isEmpty() && edges.split(",").length == 2) {
 					String nodes[] = edges.split(",");
-					System.out.println(edges);
+					
 					int nodeAt1 = Integer.parseInt(nodes[0]);
 					int nodeAt2 = Integer.parseInt(nodes[1]);
 					
@@ -110,7 +110,8 @@ public class graph extends Application{
 						
 						
 						Line edgeLine = new Line();
-					//	edgeLine.
+				
+						
 						edgeLine.setStartX(node1.getCenterX());
 						edgeLine.setStartY(node1.getCenterY());
 						
@@ -118,17 +119,21 @@ public class graph extends Application{
 						edgeLine.setEndY(node2.getCenterY());
 						
 						
-						if(node1.addLink(edges,edgeLine) && node2.addLink(edges,edgeLine))
-							pane.getChildren().add(edgeLine);
+						
+						if(node1.addLink(edges,edgeLine) && node2.addLink(edges,edgeLine)) {
 							
+							pane.getChildren().add(edgeLine);
+							edgeLine.toBack();
+						}
 						
 						
-						edgeField.setText("");
 						
 					}else {
-						System.err.println("ERROR this vertices are already neibours");
+						showError("this vertices are already neighbours");
+						
 					}
-									
+					
+					edgeField.setText("");
 				
 					
 			}else {
@@ -143,23 +148,17 @@ public class graph extends Application{
 		});
 		
 		removeNode.setOnAction(remove->{
-	
 				
-			///showWarning("The last vertex to be added will be removed along with any edges associated with it");
-			
 			for(int i = 0; i < vertices.size(); ++i) {
 				
 				if(pane.contains(vertices.get(i).getCenterX(), vertices.get(i).getCenterY()) ) {
 					pane.getChildren().remove(vertices.get(i).myCircleNode());
 					
 					for(Map.Entry<String, Line> entry : vertices.get(i).getLinks().entrySet()) {
-						
-						
-						pane.getChildren().remove(entry.getValue());
-						
+							
+						pane.getChildren().remove(entry.getValue());	
 						
 					}
-					
 					
 				}
 				
@@ -258,11 +257,7 @@ public class graph extends Application{
 		
 	}
 	
-	public void transformLineCoordinates(double radius,Vertex node1, Vertex node2) {
-		
-		
-		
-	}
+	
 	
 	
 	
