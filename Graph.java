@@ -179,15 +179,9 @@ public class graph extends Application{
 		
 			
 			if(vertices.size() == 0) { showWarning("No vertices to colour");}
-			else
+			else {
 				new Colour(vertices);
-			
-			
-			if(vertices.get(0).compare(vertices.get(0),vertices.get(1)) == 1) {
-				System.err.println("vertex 0 has a larger degree");
 			}
-			
-			
 		});
 		
 		

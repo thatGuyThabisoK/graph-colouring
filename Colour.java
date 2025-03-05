@@ -10,7 +10,7 @@ public class Colour {
 		colourVertices(vertices);
 		//System.out.println("**************");
 
-		//displayDegree(vertices);
+		displayDegree(vertices);
 
 	}
 	
@@ -39,11 +39,9 @@ public class Colour {
 			
 			
 			if(dis != -1) {
-				System.out.println(i+" : "+dis);
+				//System.out.println(i+" : "+dis);
 				vertices.get(i).changeColour(dis);
 				
-			}else {
-				System.err.println("Vertex -> "+i+" is not colored in........");
 			}
 		}
 	}
